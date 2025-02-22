@@ -28,100 +28,78 @@ function getPackagePrice(package_name) {
         return 60;
     }
 }
-function setproductData(totalElement, productsData, element, price) {
-   // if(totalElement > 0) {
+function setproductData(productsData, element, value, valueTotal) {
         var quantity = productsData.children[1]; // drugi stolpec
-        console.log("Q " + quantity.innerHTML);
-        console.log(element);
-        // TODO !!! urediti prikaz za skrivanje
+        var total = productsData.children[2];
+
         if(element !== 0 || element === true) {
             productsData.classList.remove("hidden");
         }
-        var total = productsData.children[2];
-        console.log(quantity);
-        if(typeof element === "string") {
-            quantity.innerHTML = element;
-            // CENA PAKETA?
-            total.innerHTML = "$" + getPackagePrice(element) ;
+        if (typeof element !== "boolean")
+            quantity.innerHTML = value
 
-        } else if (typeof element === "boolean") {
-            //quantity.innerHTML = element;
-            total.innerHTML = "$" + totalElement ;
-        }
-        else {
-            quantity.innerHTML = element + " * " + "$" + price;
-            total.innerHTML = "$" + totalElement ;
-        }
-        // if string?
+        total.innerHTML = valueTotal;
+}
+function calculateTotal() {
 
-  //  }
 }
 function showTotal() {
-    console.log("Showing total");
-    var itemsElement = document.getElementsByClassName("items")[0];
     var productsData = document.getElementsByClassName("products-data")[0];
     var ordersData = document.getElementsByClassName("orders-data")[0];
     var packageData = document.getElementsByClassName("package-data")[0];
     var accountingData = document.getElementsByClassName("accounting-data")[0];
     var rentalData = document.getElementsByClassName("rental-data")[0];
 
-    console.log(itemsElement);
     if(totals.products > 0)
-        setproductData(totals.products, productsData, products, 0.5);
+        setproductData(productsData, products, products + " * " + "$" + 0.5,"$" + totals.products);
     else
         productsData.classList.add("hidden")
     if(totals.orders > 0)
-        setproductData(totals.orders, ordersData, orders, 0.25);
+        setproductData(ordersData, orders, orders + " * " + "$" + 0.25, "$" + totals.orders);
     else
         ordersData.classList.add("hidden")
     if(totals.package !== "Choose package")
-        setproductData(totals.package, packageData, package);
+        setproductData(packageData, package, package, "$" + getPackagePrice(package));
     if(totals.accounting === 35)
-        setproductData(totals.accounting, accountingData, accounting);
+        setproductData(accountingData, accounting, "$" + totals.accounting, "$" + totals.accounting);
     else
         accountingData.classList.add("hidden")
     if(totals.rental === 5)
-        setproductData(totals.rental, rentalData, rental);
+        setproductData(rentalData, rental, "$" + totals.rental, "$" + totals.rental);
     else
         rentalData.classList.add("hidden")
-    console.log(productsData);
+
 
 }
-function calcluteTotal() {
-    console.log("Calculating total");
+
+function getValues() {
+    products = parseInt(productsInput.value); // dobim vrednost za produkt
     totals.products = products * 0.5; // izracunam total za produkt
+
+    orders = parseInt(ordersInput.value);
     totals.orders = orders * 0.25;
+
+    package = packageInput.value;
     totals.package = package;
-    if(accounting === true) {
+
+    rental = rentalInput.value;
+    if(accountingInput.checked) {
+        accounting = true;
         totals.accounting = 35;
     } else {
+        accounting = false;
         totals.accounting = 0;
     }
-    if(rental === true) {
+
+    if(rentalInput.checked) {
+        rental = true;
         totals.rental = 5;
     } else {
+        rental = false;
         totals.rental = 0;
     }
     console.log(totals);
     showTotal();
-}
-function getValues() {
-    products = parseInt(productsInput.value); // dobim vrednost za produkt
-    orders = parseInt(ordersInput.value);
-    package = packageInput.value;
-    rental = rentalInput.value;
-    console.log(rentalInput);
-    if(accountingInput.checked) {
-        accounting = true;
-    } else {
-        accounting = false;
-    }
-    if(rentalInput.checked) {
-        rental = true;
-    } else {
-        rental = false;
-    }
-    calcluteTotal();
 }
 
 productsInput.addEventListener("change", getValues);
