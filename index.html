@@ -18,10 +18,11 @@
       </label><br/>
       <label for="orders"></label>
       <label>
-        <select name="package">
-          <option value="0">Basic</option>
-          <option value="25">Professional</option>
-          <option value="60">Premium</option>
+        <select name="package" id="package">
+          <option>Choose package</option>
+          <option value="Basic">Basic</option>
+          <option value="Professional">Professional</option>
+          <option value="Premium">Premium</option>
         </select>
       </label><br/>
       <input type="checkbox" name="accounting" value="35">
@@ -39,6 +40,11 @@
           </tr>
           <tr class="orders-data hidden">
             <td>Orders</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="package-data hidden">
+            <td>Package</td>
             <td></td>
             <td></td>
           </tr>

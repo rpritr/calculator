@@ -2,37 +2,64 @@ console.log("JS working")
 
 var productsInput = document.getElementById("products"); // input za produkte
 var ordersInput = document.getElementById("orders"); // input za produkte
-
+var packageInput = document.getElementById("package"); // input za paket
 
 var products = 0; // vrednost inputa za produkte
 var orders = 0; // vrednost inputa za produkte
+var package = 0; // vrednost inputa za produkte
 
 var totals = { // objekt celotne kalukacije
     products : 0, // vrednsot za produkte
-    orders : 0
+    orders : 0,
+    package : 0
+}
+function getPackagePrice(package_name) {
+    if(package_name === "Basic") {
+        return 0;
+    } else if(package_name === "Professional") {
+        return 25;
+    } else if(package_name === "Premium"){
+        return 60;
+    }
 }
 function setproductData(totalElement, productsData, element, price) {
-    if(totalElement > 0) {
+   // if(totalElement > 0) {
         var quantity = productsData.children[1]; // drugi stolpec
         console.log("Q " + quantity.innerHTML);
+        console.log(element);
+        // TODO !!! urediti prikaz za skrivanje
         if(quantity.innerHTML.length === 0) {
             productsData.classList.toggle("hidden");
         }
         var total = productsData.children[2];
         console.log(quantity);
-        quantity.innerHTML = element + " * " + "$" + price;
-        total.innerHTML = "$" + totalElement ;
-    }
+        if(typeof element === "string") {
+            quantity.innerHTML = element;
+            // CENA PAKETA?
+            total.innerHTML = "$" + getPackagePrice(element) ;
+
+        } else {
+            quantity.innerHTML = element + " * " + "$" + price;
+            total.innerHTML = "$" + totalElement ;
+        }
+        // if string?
+
+  //  }
 }
 function showTotal() {
     console.log("Showing total");
     var itemsElement = document.getElementsByClassName("items")[0];
-    var productsData = document.getElementsByClassName("products-data")[0]
-    var ordersData = document.getElementsByClassName("orders-data")[0]
+    var productsData = document.getElementsByClassName("products-data")[0];
+    var ordersData = document.getElementsByClassName("orders-data")[0];
+    var packageData = document.getElementsByClassName("package-data")[0];
 
     console.log(itemsElement);
-    setproductData(totals.products, productsData, products, 0.5);
-    setproductData(totals.orders, ordersData, orders, 0.25);
+    if(totals.products)
+        setproductData(totals.products, productsData, products, 0.5);
+    if(totals.orders)
+        setproductData(totals.orders, ordersData, orders, 0.25);
+    if(totals.package !== "Choose package")
+        setproductData(totals.package, packageData, package);
 
     console.log(productsData);
 
@@ -41,19 +68,21 @@ function calcluteTotal() {
     console.log("Calculating total");
     totals.products = products * 0.5; // izracunam total za produkt
     totals.orders = orders * 0.25;
+    totals.package = package;
     console.log(totals);
     showTotal();
 }
 function getValues() {
-    products = productsInput.value; // dobim vrednost za produkt
-    orders = ordersInput.value;
-    console.log(products);
-    console.log(orders);
+    products = parseInt(productsInput.value); // dobim vrednost za produkt
+    orders = parseInt(ordersInput.value);
+    package = packageInput.value;
+    console.log(package);
     calcluteTotal();
 }
 
 productsInput.addEventListener("change", getValues);
 ordersInput.addEventListener("change", getValues);
+packageInput.addEventListener("change", getValues);
 
 
 
