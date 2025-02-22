@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+</head>
+<body>
+  <h1>Calculator</h1>
+  <section class="calculator">
+    <h2>Calculate how much you pay</h2>
+    <div class="left inputs">
+      <label>
+        <input type="number" name="products" placeholder="Product quantity">
+      </label><br/>
+      <label>
+        <input type="number" name="orders" placeholder="Number of orders">
+      </label><br/>
+      <label for="orders"></label>
+
+      <label>
+        <select name="package">
+          <option value="0">Basic</option>
+          <option value="25">Professional</option>
+          <option value="60">Premium</option>
+        </select>
+      </label><br/>
+      <input type="checkbox" name="accounting" value="35">
+      <label for="accounting">Accounting</label><br/>
+      <input type="checkbox" name="rental" value="5">
+      <label for="rental">Rental of a payment system</label>
+    </div>
+    <div class="right totals">
+      <div class="items">
+
+      </div>
+      <div class="total"></div>
+    </div>
+  </section>
+  <script src="app.js"></script>
+</body>
+</html>
